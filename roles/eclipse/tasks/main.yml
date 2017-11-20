@@ -1,0 +1,47 @@
+- name: Get Eclipse version
+  shell: awk -F= '/eclipse.buildId/ {print $2}' /opt/eclipse/configuration/config.ini
+  ignore_errors: yes
+  register: eclipse_buildId_installed
+
+
+- name: Delete eclipse
+  file:
+    path: /opt/eclipse
+    state: absent
+  when: eclipse_buildId_installed.stdout != eclipse_buildId
+
+- stat: path=/opt/eclipse
+  register: eclipse
+
+- name: Download Eclipse
+  get_url:
+    url: "{{eclipse_download_url}}"
+    dest: /tmp
+  when: eclipse_buildId_installed.stdout != eclipse_buildId
+
+- name: Extract Eclipse
+  file:
+    path: /opt
+    state: directory
+  when: eclipse_buildId_installed.stdout != eclipse_buildId
+
+- unarchive:
+    src: /tmp/{{eclipse_tarball}}
+    remote_src: yes
+    dest: /opt
+  when: eclipse_buildId_installed.stdout != eclipse_buildId
+
+- name: Configure Eclipse
+  copy:
+    src: eclipse
+    dest: /usr/bin/
+    mode: u=rwx,g=rx,o=rx
+
+- copy:
+    src: eclipse.desktop
+    dest: /usr/share/applications
+
+- name: Cleanup eclipse download
+  file:
+    path: /tmp/{{eclipse_tarball}}
+    state: absent

@@ -1,0 +1,24 @@
+- name: "Configure Kubernetes repo"
+  template:
+    src: kubernetes.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+
+- name: "Install kubectl"
+  yum:
+    name: kubectl
+    state: present
+
+- name: "Download kops"
+  get_url:
+    url:     "{{ kops_url }}"
+    dest:    /usr/bin/{{ kops_bin }}
+
+- file:
+    path: /usr/bin/{{ kops_bin }}
+    mode: "u=rx,g=rx,o=rx"
+
+- name: "Install kops"
+  file:
+    src: /usr/bin/{{ kops_bin }}
+    dest: /usr/bin/kops
+    state: link

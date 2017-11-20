@@ -1,0 +1,19 @@
+- name: Install IUS
+  yum:
+    name: https://centos7.iuscommunity.org/ius-release.rpm
+
+- name: Install Git
+  yum:
+    name: git2u
+
+- name: Configure Git
+  template:
+    src: gitconfig
+    dest: /home/{{ local_username}}/.gitconfig
+    mode: u=rw,g=r,o=
+    owner: "{{ local_username }}"
+    group: "{{ local_username }}"
+
+- name: Install Meld
+  yum:
+    name: meld

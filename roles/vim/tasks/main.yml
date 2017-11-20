@@ -1,0 +1,40 @@
+- name: Install VIM
+  yum:
+    name: vim
+
+- name: Configure VIM
+  copy:
+    src: .vimrc
+    dest: /home/{{ local_username }}/.vimrc
+    mode: u=rw,g=r,o=
+    owner: "{{ local_username }}"
+    group: "{{ local_username }}"
+
+- file:
+    path: /home/{{ local_username}}/.vim
+    state: directory
+    mode: u=rw,g=r,o=
+    owner: "{{ local_username }}"
+    group: "{{ local_username }}"
+
+- file:
+    path: /home/{{ local_username}}/.vim/colors/
+    state: directory
+    mode: u=rw,g=r,o=
+    owner: "{{ local_username }}"
+    group: "{{ local_username }}"
+
+- copy:
+    src: monokai.vim
+    dest: /home/{{ local_username}}/.vim/colors/
+    mode: u=rw,g=r,o=
+    owner: "{{ local_username }}"
+    group: "{{ local_username }}"
+
+- yum:
+    name: dos2unix
+    state: present
+
+- command: dos2unix /home/{{ local_username }}/.vimrc
+
+- command: dos2unix /home/{{ local_username }}/.vim/colors/monokai.vim

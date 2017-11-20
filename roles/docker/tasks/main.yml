@@ -1,0 +1,25 @@
+- name: Install Docker repo
+  yum: name=yum-utils state=present
+
+- command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+- name: Install Docker
+  yum: name=docker-ce state=present
+
+- name: Configure docker
+  file:
+    path: /etc/docker
+    state: directory
+    mode: 0700
+    owner: root
+    group: root
+
+- template:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+
+- name: Start Docker
+  service: name=docker state=started enabled=true
+
+- name: Add user to group
+  user: name={{ local_username}} append=yes groups=docker

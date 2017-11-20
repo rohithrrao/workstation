@@ -1,0 +1,3 @@
+kops_version: 1.7.0
+kops_bin: kops-linux-amd64
+kops_url: https://github.com/kubernetes/kops/releases/download/{{ kops_version }}/{{ kops_bin }}

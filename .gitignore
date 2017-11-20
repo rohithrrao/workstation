@@ -1,0 +1,8 @@
+playbook.retry
+.vagrant/
+personalize.yml
+roles/custom/tasks
+roles/custom/templates
+roles/custom/files
+roles/custom/meta
+roles/custom/vars

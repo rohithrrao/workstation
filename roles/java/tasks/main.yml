@@ -1,0 +1,27 @@
+- name: Get java version
+  shell: java -version 2>&1 | awk '/java version/ {print $3}' | sed 's/"//g'
+  ignore_errors: yes
+  register: java_version_installed
+
+- name: Install and configure java
+  stat: path=/usr/java/default
+  register: java
+
+- name: Download Java RPM
+  get_url:
+    url:     "{{ java_url }}"
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+    dest:    /tmp/{{ java_rpm }}
+  when: java_version_installed.stdout != java_version
+
+- name: Install java
+  yum: name=/tmp/{{ java_rpm }}
+  when: java_version_installed.stdout != java_version
+
+- name: Link java
+  file: path=/usr/java/jdk src=/usr/java/default state=link
+  when: java_version_installed.stdout != java_version
+
+- name: Cleanup java
+  file: path=/tmp/{{ java_rpm }} state=absent
+  when: java_version_installed.stdout != java_version

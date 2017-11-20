@@ -1,0 +1,21 @@
+- name: Download Terraform
+  get_url:
+    url: "{{ terraform_download_url }}"
+    dest: "/tmp/{{ terraform_zip }}"
+
+- name: Extract Terraform
+  unarchive:
+    remote_src: yes
+    src: /tmp/{{ terraform_zip }}
+    dest: /usr/local/bin/
+
+- file: 
+    path: /usr/local/bin/terraform
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+
+- name: Cleanup Terraform Download
+  file: 
+    path: /tmp/{{ terraform_zip }}
+    state: absent

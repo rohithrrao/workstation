@@ -1,0 +1,21 @@
+[user]
+    name = "{{ git_user_name }}"
+    email = "{{ git_user_email }}"
+[color]
+    ui = true
+[push]
+     default = simple
+[branch]
+    autosetupmerge = false
+
+[credential "https://github.com"]
+    username = "{{ github_username }}"
+
+[credential]
+    helper = cache
+
+[merge]
+    tool = meld
+
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"

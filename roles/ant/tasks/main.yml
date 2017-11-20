@@ -1,0 +1,21 @@
+- name: Install and configure ant
+  stat: path=/usr/bin/ant
+  register: ant
+
+- name: Download Ant
+  get_url:
+    url: http://archive.apache.org/dist/ant/binaries/apache-ant-1.8.2-bin.tar.gz
+    dest: /tmp/apache-ant-1.8.2-bin.tar.gz
+  when: ant.stat.exists == False
+
+- name: Extract Ant
+  unarchive: src=/tmp/apache-ant-1.8.2-bin.tar.gz dest=/usr/lib copy=no
+  when: ant.stat.exists == False
+
+- name: Configure Ant
+  alternatives: link=/usr/bin/ant name=ant path=/usr/lib/apache-ant-1.8.2/bin/ant
+  when: ant.stat.exists == False
+
+- name: Cleanup Ant
+  file: path=/tmp/apache-ant-1.8.2-bin.tar.gz state=absent
+  when: ant.stat.exists == False

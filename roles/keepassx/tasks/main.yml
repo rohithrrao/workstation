@@ -1,0 +1,14 @@
+- name: "Install KeePassX"
+  yum:
+    name: keepassx2
+
+- name: "Configure KeePassX"
+  file:
+    path: /home/{{ local_username }}/.config/keepassx
+    state: directory
+    owner: "{{ local_username }}"
+    group: "{{ local_username }}"
+
+- template:
+    src: keepassx2.ini
+    dest: /home/{{ local_username }}/.config/keepassx/keepassx2.ini

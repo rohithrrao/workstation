@@ -1,0 +1,3 @@
+- name: Install subversion
+  yum:
+    name: subversion

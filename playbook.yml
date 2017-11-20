@@ -1,0 +1,27 @@
+- name: Setup workstation
+  hosts: all, localhost
+  become: yes
+
+  vars_files:
+    - personalize.yml
+
+  roles:
+    - { role: update, tags: ['update'] }
+    - { role: xfce, tags: ['xfce'] }
+    - { role: basics, tags: ['basics'] }
+    - { role: docker, tags: ['docker'] }
+    - { role: vim, tags: ['vim'] }
+    - { role: git, tags: ['git'] }
+    - { role: svn, tags: ['svn'] }
+    - { role: java, tags: ['java'] }
+    - { role: eclipse, tags: ['eclipse'] }
+    - { role: custom, tags: ['custom']}
+# Archived roles
+#    - { role: ant, tags: ['ant'] }
+#    - { role: rpmbuild, tags: ['rpmbuild']}
+#    - { role: keepassx, tags: ['keepassx']}
+#    - { role: terraform, tags: ['terraform']}
+#    - { role: prometheus, tags: ['prometheus'] }
+#    - { role: kubernetes, tags: ['kubernetes'] }
+#    - { role: awscli, tags: ['awscli'] }
+

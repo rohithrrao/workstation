@@ -1,0 +1,4 @@
+local_username: jane
+git_user_name: "Jane Doe"
+git_user_email: "jane.doe@mail.com"
+github_username: "jane.doe"

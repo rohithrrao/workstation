@@ -1,0 +1,24 @@
+- name: "Install X Window Manager"
+  yum:
+    name: "@X Window system"
+    state: present
+
+- name: "Install xfce"
+  yum:
+    name: "@Xfce"
+    state: present
+
+- name: "Remove Openbox"
+  yum:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - openbox
+    - openbox-libs
+
+- file:
+  path: /usr/share/xsessions/openbox.desktop
+  state: absent
+
+- name: "Set default target"
+  command: systemctl set-default graphical.target
