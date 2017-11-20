@@ -17,8 +17,8 @@
     - openbox-libs
 
 - file:
-  path: /usr/share/xsessions/openbox.desktop
-  state: absent
+    path: /usr/share/xsessions/openbox.desktop
+    state: absent
 
 - name: "Set default target"
   command: systemctl set-default graphical.target
