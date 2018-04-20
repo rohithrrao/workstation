@@ -13,10 +13,10 @@
     - { role: vim, tags: ['vim'] }
     - { role: git, tags: ['git'] }
     - { role: svn, tags: ['svn'] }
-    - { role: java, tags: ['java'] }
     - { role: eclipse, tags: ['eclipse'] }
     - { role: custom, tags: ['custom']}
 # Archived roles
+#    - { role: java, tags: ['java'] }
 #    - { role: ant, tags: ['ant'] }
 #    - { role: rpmbuild, tags: ['rpmbuild']}
 #    - { role: keepassx, tags: ['keepassx']}
